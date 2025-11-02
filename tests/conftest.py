@@ -2,9 +2,12 @@ import pytest
 import requests
 from selenium import webdriver
 from faker import Faker
-from data import UrlsApi, RegUser
+from urls import UrlsApi
+from data import RegUser
 from pages.login_page import LoginPage
 from pages.main_page import HeaderPage, MainPage
+from pages.base_page import BasePage
+from seletools.actions import drag_and_drop
 
 
 @pytest.fixture(params=['chrome', 'firefox'])
@@ -46,5 +49,5 @@ def login(driver, create_user):
     data = create_user[0]
     HeaderPage(driver).click_login_btn()
     LoginPage(driver).login_auth(data["email"], data["password"])
-    MainPage(driver).wait_place_order_btn()
+    MainPage(driver).main_page_loading_wait()
 

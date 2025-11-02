@@ -45,5 +45,3 @@ class NotVisionPopup:
     WINDOW_1 = [By.XPATH, ".//div[@class='Modal_modal_opened__3ISw4 Modal_modal__P3_V5']"]
     WINDOW_2 = [By.XPATH, ".//section[@class='Modal_modal__P3_V5']/div[@class='Modal_modal_overlay__x2ZCr']"]
     WINDOW_3 = [By.XPATH, ".//div[@class='Modal_modal__P3_V5']/div[@class='Modal_modal_overlay__x2ZCr']"]
-
-

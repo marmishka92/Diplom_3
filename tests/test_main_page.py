@@ -1,5 +1,5 @@
 import allure
-from data import UrlsApi
+from urls import UrlsApi
 from pages.main_page import HeaderPage, MainPage
 
 
@@ -9,6 +9,7 @@ class TestMainPage:
     def test_click_constructor_btn(self, driver):
         header = HeaderPage(driver)
         main_page = MainPage(driver)
+        main_page.main_page_loading_wait()
         header.click_login_btn()
         header.click_to_constructor_btn()
         assert main_page.get_current_url().rstrip("/") == UrlsApi.MAIN.rstrip("/")
@@ -18,6 +19,7 @@ class TestMainPage:
     def test_click_lent_order(self, driver):
         header = HeaderPage(driver)
         main_page = MainPage(driver)
+        main_page.main_page_loading_wait()
         header.click_login_btn()
         header.click_to_order_btn()
         assert main_page.get_current_url() == UrlsApi.ORDER_LENT
@@ -36,7 +38,7 @@ class TestMainPage:
         main_page.close_popup_info()
         assert main_page.check_close_popup()
 
-    @allure.title('Проверка счетчика ингредиентов')
+    @allure.title("Проверка счётчика ингредиентов при перетаскивании булки")
     def test_counter_ingredient(self, driver):
         main_page = MainPage(driver)
         main_page.add_bun_cart()
