@@ -20,10 +20,17 @@ class MainFuncConstruct:
     BUTTON_CONSTRUCT = [By.XPATH, ".//p[text()= 'Конструктор']"] # Кнопка Конструктор в хедере
     BUTTON_ORDER_LENT = [By.XPATH, ".//p[text()= 'Лента Заказов']"] # Кнопка Лента Заказов
     BUN = [By.XPATH, ".//img[@alt='Флюоресцентная булка R2-D3']"] # Ингредиент булка
-    INGREDIENT_SAUCE =[By.XPATH, ".//img[@alt='Соус фирменный Space Sauce']"] # Ингредиент Соус
-    INGREDIENT_FILLING = [By.XPATH, ".//img[@alt='Мясо бессмертных моллюсков Protostomia']"] # Ингредиент Начинка
-    POP_WINDOW = [By.XPATH, ".//div[@class='Modal_modal__container__Wo2l_']"] # Всплывающее окно
-    BUTTON_CROSS = [By.XPATH, ".//button[@type='button'][1]"] # Кнопка крестик
+
+    #INGREDIENT_SAUCE =[By.XPATH, ".//img[@alt='Соус фирменный Space Sauce']"]
+    #INGREDIENT_FILLING = [By.XPATH, ".//img[@alt='Мясо бессмертных моллюсков Protostomia']"]
+    #POP_WINDOW = [By.XPATH, ".//div[@class='Modal_modal__container__Wo2l_']"]
+    #BUTTON_CROSS = [By.XPATH, ".//button[@type='button'][1]"] # Кнопка крестик
+
+    INGREDIENT_SAUCE = (By.XPATH, "//li[contains(@class, 'burger-ingredient')][.//img[@alt='Соус фирменный Space Sauce']]") # Ингредиент Соус
+    INGREDIENT_FILLING = (By.XPATH, "//li[contains(@class, 'burger-ingredient')][.//img[@alt='Мясо бессмертных моллюсков Protostomia']]") # Ингредиент Начинка
+    POP_WINDOW = (By.XPATH, "//section[contains(@class, 'modal_opened')]") # Всплывающее окно
+    BUTTON_CROSS = (By.XPATH,"//section[contains(@class, 'modal_opened')]//button[contains(@class, 'modal__close')]")
+
     COUNTER_INGREDIENT = [By.XPATH, ".//p[@class='counter_counter__num__3nue1']"] # Счетчик кол-ва ингредиента в заказе
     COUNTER_ALL_TIME = [By.XPATH, ".//p[text()='Выполнено за все время:']/following-sibling::p"] # Счетчик заказов за всё время
     COUNTER_TODAY = [By.XPATH, ".//p[text()='Выполнено за сегодня:']/following-sibling::p"] # Счетчик за сегодня
@@ -38,7 +45,6 @@ class MainFuncConstruct:
     NUMBER_IN_JOB = [By.XPATH, ".//li[@class='text text_type_digits-default mb-2']"] # Номер заказа в работе
     ORDER_HISTORY = [By.XPATH, ".//p[@class='text_type_digits-default']"] # История заказов
     BUTTON_CROSS_IN_ORDER = [By.XPATH, ".//button[@class='Modal_modal__close_modified__3V5XS Modal_modal__close__TnseK']"] # Крестик в окне с закказом
-
 
 class NotVisionPopup:
 

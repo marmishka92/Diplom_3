@@ -1,24 +1,25 @@
 import allure
-from pages.base_page import BasePage
-from locators import locators
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from SuccessOrderModalLocators import SuccessOrderModalLocators
+from locators.locators import MainFuncConstruct
+from pages.base_page import BasePage
 
 
 class OrderPage(BasePage):
 
-    @allure.step('Получение количества заказов (текст)')
-    def check_get_counter_order2(self, locators):
-        return self.get_text_element(locators)
+    @allure.step("Ожидаем появления формы 'Лента заказов'")
+    def wait_order_feed_visible(self) -> None:
+        self.wait_for_element_visible(MainFuncConstruct.ORDER_LENT_FORM)
+
+    @allure.step("Получаем значение счётчика заказов (текст)")
+    def get_counter_value(self, locator: tuple[str, str]) -> str:
+        element = self.wait_for_element_visible(locator)
+        value = element.text.strip().replace(" ", "")
+        allure.attach(value, name="Значение счётчика", attachment_type=allure.attachment_type.TEXT)
+        return value
 
     @allure.step("Получаем числовое значение счётчика заказов")
-    def check_get_counter_order(self, locator):
-        """Ожидаем обновления счётчика на странице заказов"""
-        element = WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(locator)
-        )
+    def check_get_counter_order(self, locator: tuple[str, str]) -> int:
+        element = self.wait_for_element_visible(locator)
         text = element.text.strip()
         try:
             return int(text)
@@ -26,24 +27,21 @@ class OrderPage(BasePage):
             allure.attach(self.driver.page_source, "HTML при ошибке", allure.attachment_type.HTML)
             raise AssertionError(f"Ожидалось число, но получено: {text}")
 
-    @allure.step('Получение списка заказов "В работе"')
-    def get_order_list_in_job(self):
-        WebDriverWait(self.driver, 15).until(
-            EC.visibility_of_all_elements_located(locators.MainFuncConstruct.NUMBER_IN_JOB)
-        )
-        elements = self.driver.find_elements(*locators.MainFuncConstruct.NUMBER_IN_JOB)
+    @allure.step("Получаем список заказов 'В работе'")
+    def get_order_list_in_job(self) -> list[str]:
+        self.wait_for_elements_visible(MainFuncConstruct.NUMBER_IN_JOB)
+        elements = self.driver.find_elements(*MainFuncConstruct.NUMBER_IN_JOB)
         orders = [el.text.strip() for el in elements if el.text.strip()]
         allure.attach(str(orders), name="Список заказов 'В работе'", attachment_type=allure.attachment_type.TEXT)
         return orders
 
-    @allure.step('Ожидание появления конкретного заказа в разделе "В работе"')
-    def wait_order_in_job(self, order_number: str, timeout: int = 15):
-        """Ожидает появления конкретного номера заказа без time.sleep"""
+    @allure.step("Ожидание появления конкретного заказа в разделе 'В работе'")
+    def wait_order_in_job(self, order_number: str, timeout: int = 15) -> bool:
         try:
-            WebDriverWait(self.driver, timeout).until(
+            self.wait.until(
                 lambda d: any(
                     order_number in el.text
-                    for el in d.find_elements(*locators.MainFuncConstruct.NUMBER_IN_JOB)
+                    for el in d.find_elements(*MainFuncConstruct.NUMBER_IN_JOB)
                 )
             )
             return True
@@ -51,19 +49,6 @@ class OrderPage(BasePage):
             return False
 
     @allure.step("Ожидание загрузки ленты заказов")
-    def wait_for_orders_feed_loaded(self):
-        """Ждём, пока появится блок ленты заказов."""
-        WebDriverWait(self.driver, 15).until(
-            EC.visibility_of_element_located(locators.MainFuncConstruct.ORDER_LENT_FORM)
-        )
-
-    @allure.step("Получаем значение счётчика заказов (текст)")
-    def get_counter_value(self, locator):
-        """Возвращает текстовое значение счётчика"""
-        element = WebDriverWait(self.driver, 15).until(
-            EC.visibility_of_element_located(locator)
-        )
-        value = element.text.strip().replace(" ", "")
-        allure.attach(value, name="Значение счётчика", attachment_type=allure.attachment_type.TEXT)
-        return value
+    def wait_for_orders_feed_loaded(self) -> None:
+        self.wait_for_element_visible(MainFuncConstruct.ORDER_LENT_FORM)
 
