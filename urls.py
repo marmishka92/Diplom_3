@@ -1,0 +1,12 @@
+class UrlsApi:
+    MAIN = 'https://stellarburgers.education-services.ru'
+    ORDER_LENT = 'https://stellarburgers.education-services.ru/feed'
+    REG_USER = MAIN + '/api/auth/register'
+    LOGIN_USER = MAIN + '/api/auth/login'
+    ORDER_USER = MAIN + '/api/auth/order'
+    DEL_USER = MAIN + '/api/auth/user'
+    CREATE_ORDER = MAIN + '/api/orders'
+    GET_ORDER_USER = MAIN + '/api/orders'
+    PROFILE_PAGE = MAIN + '/account/profile'
+    ORDER_HISTORY = MAIN + '/account/order-history'
+    LOGIN_PAGE = MAIN + '/login'
